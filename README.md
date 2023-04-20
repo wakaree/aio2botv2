@@ -1,8 +1,10 @@
 # aio2botv2
 Бот на aiogram 2 с возможностью установки мидлварей (промежуточных программ) на исходящие запросы из бота.
 
+
 **Вся логика находится в ./_bot**
 **Примеры мидлварей находятся в ./middlewares**
+
 
 
 **Пример мидлваря "счётчик исходящих запросов" (**ссылка на код**)[./middlewares/counter]:**
@@ -20,6 +22,7 @@ class CounterMiddleware(BaseRequestMiddleware):
 
         return await request(method, data, files, **kwargs)
 ```
+
 
 **Установка ничем не отличается от обычной настройки бота в aiogram2.**
 

@@ -5,7 +5,7 @@
 **Примеры мидлварей находятся в ./middlewares**
 
 
-Пример мидлваря "счётчик исходящих запросов" (**ссылка на код**)[./middlewares/counter]:
+**Пример мидлваря "счётчик исходящих запросов" (**ссылка на код**)[./middlewares/counter]:**
 
 ```
 class CounterMiddleware(BaseRequestMiddleware):

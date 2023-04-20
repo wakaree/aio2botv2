@@ -4,9 +4,11 @@
 **Вся логика находится [тут](https://github.com/wakaree/aio2botv2/blob/main/_bot)**  
 **Примеры находятся [тут](https://github.com/wakaree/aio2botv2/blob/main/middlewares)**  
   
-**Установка ничем не отличается от обычной настройки бота в aiogram2.**  
+**Установка:**  
   
 ```
+from aiogram import Dispatcher
+
 from _bot import BotV2
 from middlewares import YourMiddlewareExample, YourMiddlewareExample2
 

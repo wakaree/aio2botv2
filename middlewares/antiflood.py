@@ -63,7 +63,7 @@ class AntiFloodMiddleware(BaseMiddleware):
                 del self._cache[event.from_user.id]
                 raise CancelHandler()
 
-            elif self._cache[event.from_user.id] >= self.warning_limit:
+            elif self._cache[event.from_user.id] == self.warning_limit:
                 await event.reply(
                     "If you do not stop flooding, "
                     "I will be forced to restrict you of the right to write to the chat."

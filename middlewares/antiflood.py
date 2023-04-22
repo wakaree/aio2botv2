@@ -1,6 +1,7 @@
 
 from __future__ import annotations
 
+from asyncio import gather
 from datetime import datetime, timedelta
 from typing import Dict, Union
 
@@ -35,12 +36,12 @@ class AntiFloodMiddleware(BaseMiddleware):
     async def on_pre_process_message(self, event: Message, data: Dict):  # noqa
         if self.enabled and event.chat.type == "supergroup":
             if event.from_user.id not in self._cache:
-                self._cache[event.from_user.id] = 1
+                self._cache[event.from_user.id] = [event.message_id]
 
             else:
-                self._cache[event.from_user.id] += 1
+                self._cache[event.from_user.id].append(event.message_id)
 
-            if self._cache[event.from_user.id] >= self.hard_limit:
+            if len(self._cache[event.from_user.id]) >= self.hard_limit:
                 until = datetime.now() + self.mute_time
 
                 await event.chat.restrict(
@@ -59,11 +60,15 @@ class AntiFloodMiddleware(BaseMiddleware):
                     until
                 )
                 await event.reply(f"You are not allowed to chat until {until}.")
+                await gather(*[
+                    event.chat.delete_message(message_id)
+                    for message_id in self._cache[event.from_user.id]
+                ])
 
                 del self._cache[event.from_user.id]
                 raise CancelHandler()
 
-            elif self._cache[event.from_user.id] == self.warning_limit:
+            elif len(self._cache[event.from_user.id]) == self.warning_limit:
                 await event.reply(
                     "If you do not stop flooding, "
                     "I will be forced to restrict you of the right to write to the chat."

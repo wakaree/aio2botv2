@@ -59,6 +59,8 @@ class AntiFloodMiddleware(BaseMiddleware):
                     until
                 )
                 await event.reply(f"You are not allowed to chat until {until}.")
+
+                del self._cache[event.from_user.id]
                 raise CancelHandler()
 
             elif self._cache[event.from_user.id] >= self.warning_limit:

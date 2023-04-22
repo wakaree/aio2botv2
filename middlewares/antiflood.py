@@ -41,6 +41,8 @@ class AntiFloodMiddleware(BaseMiddleware):
                 self._cache[event.from_user.id] += 1
 
             if self._cache[event.from_user.id] >= self.hard_limit:
+                until = datetime.now() + self.mute_time
+
                 await event.chat.restrict(
                     event.from_user.id,
                     ChatPermissions(
@@ -54,10 +56,13 @@ class AntiFloodMiddleware(BaseMiddleware):
                         can_pin_messages=False,
                         can_manage_topics=False
                     ),
-                    datetime.now() + self.mute_time
+                    until
                 )
-                await event.reply("Ты получил мут на 1 час за флуд.")
+                await event.reply(f"You are not allowed to chat until {until}.")
                 raise CancelHandler()
 
             elif self._cache[event.from_user.id] >= self.warning_limit:
-                await event.reply("Если ты не перестанешь флудить, я буду вынужден выдать мут.")
+                await event.reply(
+                    "If you do not stop flooding, "
+                    "I will be forced to restrict you of the right to write to the chat."
+                )

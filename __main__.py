@@ -5,7 +5,10 @@ from aiogram.utils import executor
 
 from _bot import BotV2
 from settings import Settings
-from middlewares import SemaphoreMiddleware, CounterMiddleware
+from middlewares import (
+    SemaphoreMiddleware, CounterMiddleware,
+    AntiFloodMiddleware
+)
 
 
 config = Settings.load('config.yml')
@@ -23,4 +26,5 @@ if __name__ == '__main__':
     from logging import basicConfig, INFO
     basicConfig(level=INFO)
 
+    dp.setup_middleware(AntiFloodMiddleware())
     executor.start_polling(dp)

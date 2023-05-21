@@ -22,14 +22,4 @@ class SemaphoreMiddleware(BaseRequestMiddleware):
         data: Any = None, files: Any = None, **kwargs: Any
     ):
         async with self.semaphores[method]:
-            try:
-                return await request(method, data, files, **kwargs)
-
-            except RetryAfter as flood:
-                self.log.warning(
-                    f'Flood-wait has occurred for method {method}. '
-                    f'Sleeping for {flood.timeout + 0.05} seconds'
-                )
-
-                await asleep(flood.timeout + 0.05)
-                return await request(method, data, files, **kwargs)
+            return await request(method, data, files, **kwargs)

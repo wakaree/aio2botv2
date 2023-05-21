@@ -35,7 +35,7 @@ class BotV2(Bot):
         )
 
         self.manager = RequestManager(self, self.__token)
-        self.middlewares: Optional[List[BaseRequestMiddleware]] = []
+        self.middlewares: List[BaseRequestMiddleware] = []
 
     def middleware(self, *middlewares: BaseRequestMiddleware) -> None:
         self.middlewares.extend(middlewares)

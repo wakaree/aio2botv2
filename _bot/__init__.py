@@ -1,6 +1,6 @@
 
-from .base import BotV2
+from .base import Bot
 from .response import Response
 from .request_middleware import BaseRequestMiddleware
 
-__all__ = ['BotV2', 'BaseRequestMiddleware', 'Response']
+__all__ = ['Bot', 'BaseRequestMiddleware', 'Response']

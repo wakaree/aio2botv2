@@ -9,10 +9,10 @@
 ```
 from aiogram import Dispatcher
 
-from _bot import BotV2
+from _bot import Bot
 from middlewares import YourMiddlewareExample, YourMiddlewareExample2
 
-bot = BotV2("token")
+bot = Bot("token")
 bot.middleware(YourMiddlewareExample(), YourMiddlewareExample2())
 dp = Dispatcher(bot)
 ```

@@ -2,7 +2,7 @@ import functools
 from asyncio import BaseEventLoop, AbstractEventLoop
 from typing import Optional, Dict, Any, Union, List
 
-from aiogram import Bot
+from aiogram import Bot as _Bot
 from aiogram.bot.api import TelegramAPIServer, TELEGRAM_PRODUCTION
 from aiogram.types import base
 from aiohttp import BasicAuth, ClientTimeout
@@ -11,7 +11,7 @@ from .manager import RequestManager
 from .request_middleware import BaseRequestMiddleware
 
 
-class BotV2(Bot):
+class Bot(_Bot):
     def __init__(
         self,
         token: base.String,
@@ -26,10 +26,8 @@ class BotV2(Bot):
         timeout: Optional[Union[base.Integer, base.Float, ClientTimeout]] = None,
         server: TelegramAPIServer = TELEGRAM_PRODUCTION
     ):
-        self.__token = token
-
         super().__init__(
-            self.__token, loop, connections_limit, proxy, proxy_auth,
+            token, loop, connections_limit, proxy, proxy_auth,
             validate_token, parse_mode, disable_web_page_preview,
             protect_content, timeout, server
         )

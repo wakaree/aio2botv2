@@ -15,7 +15,6 @@ from aiogram.types import Message
 
 from core import Bot
 from middlewares import CounterMiddleware
-from settings import Settings
 
 
 async def start_command(message: Message) -> None:
@@ -24,9 +23,8 @@ async def start_command(message: Message) -> None:
 
 async def main() -> None:
     basicConfig(level=INFO)
-    config = Settings.load("config.yml")
 
-    bot = Bot(config.API_TOKEN, parse_mode="html")
+    bot = Bot("42:ABC", parse_mode="html")
     bot.middleware(CounterMiddleware())
 
     dp = Dispatcher(bot)

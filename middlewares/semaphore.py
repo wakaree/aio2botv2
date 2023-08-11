@@ -1,13 +1,11 @@
-
-from asyncio import Semaphore, sleep as asleep
+from asyncio import Semaphore
 from logging import getLogger
 from typing import Any
 
 from aiogram.bot.api import Methods
-from aiogram.utils.exceptions import RetryAfter
 
-from _bot import BaseRequestMiddleware
-from _bot.manager import RequestManager
+from core import BaseRequestMiddleware, Response
+from core.manager import RequestManager
 
 
 class SemaphoreMiddleware(BaseRequestMiddleware):
@@ -18,8 +16,12 @@ class SemaphoreMiddleware(BaseRequestMiddleware):
         self.log = getLogger(__name__)
 
     async def __call__(
-        self, request: RequestManager, method: str,
-        data: Any = None, files: Any = None, **kwargs: Any
-    ):
+        self,
+        request: RequestManager,
+        method: str,
+        data: Any = None,
+        files: Any = None,
+        **kwargs: Any
+    ) -> Response:
         async with self.semaphores[method]:
             return await request(method, data, files, **kwargs)

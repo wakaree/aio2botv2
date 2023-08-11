@@ -1,7 +1,7 @@
 # aio2botv2
 Бот на aiogram 2 с возможностью установки мидлварей (промежуточных программ) на исходящие запросы из бота.  
   
-**Вся логика находится [тут](https://github.com/wakaree/aio2botv2/blob/main/_bot)**  
+**Вся логика находится [тут](https://github.com/wakaree/aio2botv2/blob/main/core)**  
 **Примеры находятся [тут](https://github.com/wakaree/aio2botv2/blob/main/middlewares)**  
   
 **Установка:**  
